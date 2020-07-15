@@ -47,6 +47,19 @@ sig = results[results$effectSizeFDR < 0.05,]
 #Writing this file to a csv for later use
 write.csv(sig, "degenes1.csv")
 
+
+process = function(dat){
+      # saving gene names
+      mapping = as.numeric(dat[, 1])
+      # removing gene names from main matrix
+      hvals = (dat[, -1])
+      # gene names now row names
+      rownames(hvals) = mapping
+      hvals = as.matrix(hvals)
+      hvals = scale(hvals)
+      return(hvals)
+}
+
 require(igraph)
 require(reshape2)
 require(ggplot2)
