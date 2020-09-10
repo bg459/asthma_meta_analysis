@@ -22,9 +22,12 @@ The following dependencies will be needed to run the main script. Please run thi
 ```
 git clone https://github.com/bg459/asthma_meta_analysis.git
 cd asthma_meta_analysis
+unzip data.zip
+mv pipeline.R data
+cd data
 Rscript pipeline.R
 ```
-
+Alternatively, pipeline.R can be run line-by-line or based on certain sections.
 # Raw Data Files
 
 A zip file (data.zip) is included with all the raw data, with the exact names as referenced in the program. To use these datasources, please unzip the file and move the folder's contents into the working directory. 
