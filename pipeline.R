@@ -1,17 +1,15 @@
 
 
 require(MetaIntegrator)
-dataObj = cohortobj$originalData$GSE35571
-dataObj = classFunction(dataObj, column = "disease status:ch1", diseaseTerms = "asthmatic")
-dataObj$pheno$group = as.numeric(dataObj$class)
+
 
 #Three datasets from MetaIntegrator
-master = getGEOData(c( "GSE65204", "GSE64913", "GSE63142"))
+master = getGEOData(c("GSE64913", "GSE63142"))
 
 
 #master = getGEOData(c( "GSE65204", "GSE64913", "GSE63142", "GSE40732", "GSE35571"))
 data = master
-gse65204 = read.csv("gse65204.csv")
+gse65204 = read.csv("healthy65.csv")
 classes = gse65204[8,]
 classes = classes[, -1]
 temp = unlist(classes)
@@ -163,9 +161,57 @@ denn3 = V(g3)$name
 
 #individual gene lists (differentially expressed)
 denn = denn1 %u% denn2 %u% denn3
-#individual co-expression networks
 g = g1 %u% g2 %u% g3
+#individual co-expression networks
 
+# Majority Voting, taking three pairs
+a = intersection(g1, g2)
+b = intersection(g2, g3)
+c = intersection(g1, g3)
+newgenes = V(a %u% b %u% c)$name %>% as.character()
+g = subgraph(g, newgenes)
+
+
+# Circos plot
+
+df = as_edgelist(g)
+df = data.frame(df)
+colnames(df) = c("from", "to")
+df$from = df$from %>% as.character()
+df$from = mapIds(org.Hs.eg.db, df$from, 'SYMBOL', 'ENTREZID')
+df$to = df$to%>% as.character()
+df$to = mapIds(org.Hs.eg.db, df$to, 'SYMBOL', 'ENTREZID')
+
+# Temp is some subset of df
+
+two = two[two$to %in% names(table(two$to))[table(two$to) > 20], ]
+
+
+circ = graph.data.frame(as.matrix(temp), directed = T)
+mat = as.matrix(get.adjacency(circ))
+
+grid.col <- setNames(topo.colors(length(unlist(dimnames(mat)))), union(rownames(mat), colnames(mat)))
+
+chordDiagram(mat, annotationTrack = "grid", preAllocateTracks = 1, grid.col = grid.col)
+
+circos.trackPlotRegion(track.index = 1, panel.fun = function(x, y) {
+  xlim = get.cell.meta.data("xlim")
+  ylim = get.cell.meta.data("ylim")
+  sector.name = get.cell.meta.data("sector.index")
+  circos.text(mean(xlim), ylim[1] + .1, sector.name, facing = "clockwise", niceFacing = TRUE, adj = c(0, 0.5))
+  circos.axis(h = "top", labels.cex = 0.5, major.tick.percentage = 0.2, sector.index = sector.name, track.index = 2)
+}, bg.border = NA)
+
+flip = function(df){
+	x = df$from
+	df$from = df$to
+	df$to = x
+	return (df)
+}
+
+# Violin plot
+
+ggplot(df, aes(x = group, y = es)) + geom_violin(width = 1,trim = FALSE, fill = "#fa9973", size = 1) + geom_boxplot(width=0.2, color="purple", alpha=0.2, size = 1) + scale_fill_viridis(discrete = TRUE) + xlab("Hub Genes") + theme_minimal() + ylab("Effect Size")+ theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), legend.position = "none", axis.title.x = element_text(color = "black", size = 18, face = "bold"), axis.title.y = element_text(color = "black", size = 18, face = "bold"), axis.text.x = element_blank(), axis.text.y = element_text(color = "black", size = 18, face = "bold"));      
 
 ##Creation of Hive plots
 k = dimnames(datExprA1g)[[1]]
