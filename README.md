@@ -13,13 +13,12 @@ pipeline.R: Main pipeline
 
 pipeline.html: Markdown file of pipeline results (same code as pipeline.R)
 
-figure2.R: script for Figure 2
+# Dependencies
 
-figure3.R: script for Figure 3
+The following dependencies will be needed to run the main script. Please run this code to load in the appropriate dependencies.
 
-supp1.R: script for Supplemental Figure 1 (boxplots)
-
-supplement.xlsx: combined supplemental gene file (S1, S2, S3, S4)
+```install.packages(c("MetaIntegrator", "igraph", "reshape2", "ggplot2", "BiocManager"))
+BiocManager::install(c("WGCNA", "flashClust", "org.Hs.eg.db"))```
 
 # Raw Data Files
 
