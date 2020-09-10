@@ -15,7 +15,7 @@ The following dependencies will be needed to run the main script. Please run thi
 ```install.packages(c("MetaIntegrator", "igraph", "reshape2", "ggplot2", "BiocManager"))```
 
 
-```BiocManager::install(c("WGCNA", "flashClust", "org.Hs.eg.db"))```
+```BiocManager::install(c("WGCNA", "flashClust", "org.Hs.eg.db", "multtest"))```
 
 # How to Run
 
