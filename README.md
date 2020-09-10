@@ -10,7 +10,7 @@ pipeline.html: Markdown file of pipeline results (same code as pipeline.R)
 
 # Dependencies
 
-The following dependencies will be needed to run the main script. Please run this code to load in the appropriate dependencies.
+The following dependencies will be needed to run the main script. Please run this code in your Rsession to load in the appropriate dependencies.
 
 ```install.packages(c("MetaIntegrator", "igraph", "reshape2", "ggplot2", "BiocManager"))```
 
