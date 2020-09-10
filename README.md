@@ -6,7 +6,7 @@
 
 pipeline.R: Main pipeline
 
-pipeline.html: Markdown file of pipeline results (same code as pipeline.R)
+pipeline.html: Static example of the R session (reproduction of the pipeline.R results)
 
 # Dependencies
 
