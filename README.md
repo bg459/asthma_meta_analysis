@@ -18,6 +18,8 @@ pipeline.html: Markdown file of pipeline results (same code as pipeline.R)
 The following dependencies will be needed to run the main script. Please run this code to load in the appropriate dependencies.
 
 ```install.packages(c("MetaIntegrator", "igraph", "reshape2", "ggplot2", "BiocManager"))```
+
+
 ```BiocManager::install(c("WGCNA", "flashClust", "org.Hs.eg.db"))```
 
 # Raw Data Files
