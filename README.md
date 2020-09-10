@@ -17,6 +17,14 @@ The following dependencies will be needed to run the main script. Please run thi
 
 ```BiocManager::install(c("WGCNA", "flashClust", "org.Hs.eg.db"))```
 
+# How to Run
+
+```
+git clone https://github.com/bg459/asthma_meta_analysis.git
+cd asthma_meta_analysis
+Rscript pipeline.R
+```
+
 # Raw Data Files
 
 A zip file (data.zip) is included with all the raw data, with the exact names as referenced in the program. To use these datasources, please unzip the file and move the folder's contents into the working directory. 
